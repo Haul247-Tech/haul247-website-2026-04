@@ -1,0 +1,170 @@
+"use client";
+
+import { zodResolver } from "@hookform/resolvers/zod";
+import Image from "next/image";
+import Link from "next/link";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { AnimateBtn } from "../animate-btn";
+
+const getInTouchSchema = z.object({
+  fullName: z.string().min(2, "Please enter your name."),
+  email: z.string().email("Please enter a valid email."),
+  message: z.string().min(10, "Please enter a short message."),
+});
+
+type GetInTouchValues = z.infer<typeof getInTouchSchema>;
+
+const inputClass =
+  "w-full border-0 border-b border-white/60 bg-transparent py-2.5 text-sm text-white placeholder:text-white/55 outline-none transition focus:border-white";
+
+export function GetInTouch() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitSuccessful },
+    reset,
+  } = useForm<GetInTouchValues>({
+    resolver: zodResolver(getInTouchSchema),
+  });
+
+  const onSubmit = (values: GetInTouchValues) => {
+    console.log("Get in touch (home)", values);
+    reset();
+  };
+
+  return (
+    <section className="bg-[#ffffff] text-white">
+      <div className="mx-auto w-full max-w-[1280px] px-6 py-14 md:py-16  !pt-1">
+        <div className="mx-auto grid md:grid-cols-[0.6fr_1.1fr]">
+          <div className="relative min-h-[300px] md:min-h-[620px]">
+            <Image
+              src="/get-in-touch-support.png"
+              alt="Customer support specialist with headset at workstation"
+              fill
+              className="object-cover grayscale"
+              sizes="(max-width: 768px) 100vw, 50vw"
+              priority
+            />
+          </div>
+
+          <div className="flex flex-col border-t bg-[#070d18] border-white/15 px-6 py-12 md:border-l md:border-t-0 md:px-10 md:py-14 lg:px-14 lg:py-16">
+            <h2 className="text-2xl font-medium leading-tight md:text-3xl lg:text-[26px]">
+              Get in touch with us for more information.
+            </h2>
+            <div className="mt-8 border-b border-white/20" />
+
+            <div className="grid gap-10 md:grid-cols-2 md:items-stretch md:gap-0">
+              <div className="h-full pt-10 md:border-r md:border-white/20 md:pr-10">
+                <div className="flex h-full flex-col justify-between">
+                  <div>
+                    <h3 className="text-lg font-medium text-[#1C4863] lg:text-[35px]">
+                      Call us
+                    </h3>
+                    <p className="mt-3 text-sm leading-relaxed text-white/85">
+                      Our customer support is ready to take you through all your
+                      inquiries
+                    </p>
+                  </div>
+                  <AnimateBtn
+                    href="#solutions"
+                    borderColor="#ffffff"
+                    color="#ffffff"
+                    hoverColor="#1C4863"
+                    hoverBgColor="#ffffff"
+                    className="mt-10 min-h-[44px]  lg:min-w-[222px]"
+                  >
+                    Speak to support
+                  </AnimateBtn>
+                </div>
+              </div>
+
+              <div className="md:pl-10 pt-10">
+                <h3 className="text-lg lg:text-[35px] font-semibold text-[#1C4863]">
+                  Send a mail
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-white/85">
+                  You rather send an email? Fill the form below and we&apos;d
+                  reach out
+                </p>
+
+                <form
+                  onSubmit={handleSubmit(onSubmit)}
+                  className="mt-8 flex flex-col gap-6"
+                >
+                  <div>
+                    <label className="sr-only" htmlFor="git-full-name">
+                      Full Name
+                    </label>
+                    <input
+                      id="git-full-name"
+                      {...register("fullName")}
+                      placeholder="Full Name"
+                      className={inputClass}
+                      autoComplete="name"
+                    />
+                    {errors.fullName ? (
+                      <p className="mt-1 text-xs text-red-300">
+                        {errors.fullName.message}
+                      </p>
+                    ) : null}
+                  </div>
+                  <div>
+                    <label className="sr-only" htmlFor="git-email">
+                      Email Address
+                    </label>
+                    <input
+                      id="git-email"
+                      type="email"
+                      {...register("email")}
+                      placeholder="Email Address"
+                      className={inputClass}
+                      autoComplete="email"
+                    />
+                    {errors.email ? (
+                      <p className="mt-1 text-xs text-red-300">
+                        {errors.email.message}
+                      </p>
+                    ) : null}
+                  </div>
+                  <div>
+                    <label className="sr-only" htmlFor="git-message">
+                      Your Message
+                    </label>
+                    <textarea
+                      id="git-message"
+                      {...register("message")}
+                      placeholder="Your Message"
+                      rows={4}
+                      className={`${inputClass} resize-none`}
+                    />
+                    {errors.message ? (
+                      <p className="mt-1 text-xs text-red-300">
+                        {errors.message.message}
+                      </p>
+                    ) : null}
+                  </div>
+
+                  <div className="flex justify-end pt-2">
+                    <button
+                      type="submit"
+                      className="bg-[#1C4863] px-8 py-3 text-sm font-semibold text-white transition hover:bg-[#1C4863]"
+                    >
+                      Send Message
+                    </button>
+                  </div>
+
+                  {isSubmitSuccessful ? (
+                    <p className="text-right text-sm text-emerald-400">
+                      Thanks — we&apos;ll be in touch.
+                    </p>
+                  ) : null}
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
