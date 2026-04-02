@@ -9,17 +9,40 @@ Bootstrapped Next.js project with:
 - React Hook Form
 - Zod
 
+## Requirements
+
+- Node.js 20+ (recommended)
+- npm 10+
+
 ## Setup
 
 ```bash
 npm install
 ```
 
+## Environment variables
+
+No `.env` file is required for the current setup.
+
 ## Run locally
 
 ```bash
 npm run dev
 ```
+
+If port 3000 is in use:
+
+```bash
+npm run dev -- -p 3001
+```
+
+## Production build
+
+```bash
+npm run build
+```
+
+`build` is configured to run `next build --webpack` to avoid local Turbopack native-binding issues on some macOS setups.
 
 ## Professional testing process
 
@@ -43,4 +66,13 @@ npm run dev
 
 - `npm run test:all` runs lint + typecheck + coverage + e2e.
 - CI workflow (`.github/workflows/ci.yml`) executes the same full gate on push/PR.
+
+## Troubleshooting
+
+If dependency state gets corrupted locally:
+
+```bash
+rm -rf node_modules package-lock.json
+npm install
+```
 # haul247-website-2026-04
