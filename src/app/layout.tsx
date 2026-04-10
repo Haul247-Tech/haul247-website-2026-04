@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Sans } from "next/font/google";
 import "./globals.css";
+import { AppToaster } from "@/components/app-toaster";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 
@@ -24,6 +25,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={ibmPlexSans.variable}>
       <body>
+        <AppToaster />
         <SiteHeader />
         {children}
         <SiteFooter />

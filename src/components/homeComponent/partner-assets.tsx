@@ -10,7 +10,7 @@ export function PartnerAssets() {
   const [asset, setAsset] = useState<AssetTab>("trucks");
 
   return (
-    <section className="bg-[#1d3e53] text-white">
+    <section className="group bg-[#1d3e53] text-white">
       <div className="mx-auto w-full max-w-[1280px] px-6 py-14 md:py-20">
         <h2 className=" text-3xl font-medium leading-tight md:text-4xl lg:text-[36px] lg:leading-[1.15]">
           Leveraging your assets with us comes with simplicity and efficiency
@@ -19,7 +19,15 @@ export function PartnerAssets() {
         <div className="mt-8 border-b border-white/25" />
 
         <div className="mt-12 grid gap-12 md:grid-cols-2 md:items-start md:gap-14 lg:gap-16">
-          <div className="relative aspect-[4/3] w-full overflow-hidden md:aspect-auto md:min-h-[420px]">
+          <div className="relative aspect-[4/3] w-full overflow-visible md:aspect-auto md:min-h-[420px]">
+            <span
+              aria-hidden
+              className="pointer-events-none absolute -right-[4px] -top-[4px] z-20 h-[2px] w-[46%] origin-right scale-x-0 bg-white transition-transform duration-500 ease-out group-hover:scale-x-100"
+            />
+            <span
+              aria-hidden
+              className="pointer-events-none absolute -right-[4px] -top-[4px] z-20 h-[46%] w-[2px] origin-top scale-y-0 bg-white transition-transform duration-500 ease-out group-hover:scale-y-100"
+            />
             <Image
               src="/partner-assets.png"
               alt="Aerial view of intermodal logistics terminal with containers and crane"

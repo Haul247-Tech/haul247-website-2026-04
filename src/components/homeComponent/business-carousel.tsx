@@ -1,8 +1,9 @@
 "use client";
 
+import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type Slide = {
   title: React.ReactNode;
@@ -63,46 +64,95 @@ const slides: Slide[] = [
 
 export function BusinessCarousel() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [direction, setDirection] = useState<1 | -1>(1);
   const activeSlide = slides[activeIndex];
 
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setDirection(1);
+      setActiveIndex((prev) => (prev + 1) % slides.length);
+    }, 5000);
+
+    return () => window.clearInterval(timer);
+  }, []);
+
   const goPrev = () => {
+    setDirection(-1);
     setActiveIndex((prev) => (prev - 1 + slides.length) % slides.length);
   };
 
   const goNext = () => {
+    setDirection(1);
     setActiveIndex((prev) => (prev + 1) % slides.length);
   };
 
+  const textSlideVariants = {
+    enter: (dir: 1 | -1) => ({ x: dir > 0 ? 90 : -90 }),
+    center: { x: 0 },
+    exit: (dir: 1 | -1) => ({ x: dir > 0 ? -90 : 90 }),
+  };
+
   const textPane = (
-    <div className="flex bg-[#1C4863] px-8 py-12 text-white md:px-12 md:py-16">
-      <div className="flex w-full flex-col justify-between">
-        <h2 className="max-w-[560px] text-5xl font-medium leading-tight lg:text-[46px]">
-          {activeSlide.title}
-        </h2>
-        <div>
-        <p className="mt-8 max-w-[520px] text-[15px] font-light leading-relaxed text-slate-200">
-          {activeSlide.description}
-        </p>
-        <Link
-          href={activeSlide.ctaHref}
-          className="mt-6 inline-block w-fit border-b border-white/40 pb-1 text-sm font-regular text-white/95"
+    <div className="relative min-h-[360px] overflow-hidden bg-[#1C4863]">
+      <AnimatePresence mode="wait" initial={false} custom={direction}>
+        <motion.div
+          key={`text-pane-${activeIndex}`}
+          custom={direction}
+          variants={textSlideVariants}
+          initial="enter"
+          animate="center"
+          exit="exit"
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          className="absolute inset-0 flex px-8 py-12 text-white md:px-12 md:py-16"
         >
-          {activeSlide.cta}
-        </Link>
-        </div>
-      </div>
+          <motion.div
+            initial={{ opacity: 0, y: -36 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1], delay: 0.12 }}
+            className="flex w-full flex-col justify-between"
+          >
+            <h2 className="max-w-[560px] text-5xl font-medium leading-tight lg:text-[46px]">
+              {activeSlide.title}
+            </h2>
+            <div>
+              <p className="mt-8 max-w-[520px] text-[15px] font-light leading-relaxed text-slate-200">
+                {activeSlide.description}
+              </p>
+              <Link
+                href={activeSlide.ctaHref}
+                className="mt-6 inline-block w-fit border-b border-white/40 pb-1 text-sm font-regular text-white/95"
+              >
+                {activeSlide.cta}
+              </Link>
+            </div>
+          </motion.div>
+        </motion.div>
+      </AnimatePresence>
     </div>
   );
 
   const imagePane = (
-    <div className="relative min-h-[360px]">
-      <Image
-        src={activeSlide.imageSrc}
-        alt={activeSlide.imageAlt}
-        fill
-        priority
-        className="object-cover"
-      />
+    <div className="relative min-h-[360px] overflow-hidden bg-slate-900">
+      <AnimatePresence mode="wait" initial={false} custom={direction}>
+        <motion.div
+          key={`image-pane-${activeIndex}`}
+          custom={direction}
+          variants={textSlideVariants}
+          initial="enter"
+          animate="center"
+          exit="exit"
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          className="absolute inset-0"
+        >
+          <Image
+            src={activeSlide.imageSrc}
+            alt={activeSlide.imageAlt}
+            fill
+            priority
+            className="object-cover"
+          />
+        </motion.div>
+      </AnimatePresence>
     </div>
   );
 

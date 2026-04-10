@@ -1,19 +1,19 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { getAxiosErrorMessage } from "@/lib/api-client";
+import {
+  buildContactSimplePayload,
+  contactSimpleFormSchema,
+  defaultContactSimpleFormValues,
+  submitContactSimpleRequest,
+  type ContactSimpleFormValues
+} from "@/lib/forms/contact-simple";
+import { notifyError, notifySuccess } from "@/lib/notify";
 import Image from "next/image";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { AnimateBtn } from "../animate-btn";
-
-const getInTouchSchema = z.object({
-  fullName: z.string().min(2, "Please enter your name."),
-  email: z.string().email("Please enter a valid email."),
-  message: z.string().min(10, "Please enter a short message."),
-});
-
-type GetInTouchValues = z.infer<typeof getInTouchSchema>;
 
 const inputClass =
   "w-full border-0 border-b border-white/60 bg-transparent py-2.5 text-sm text-white placeholder:text-white/55 outline-none transition focus:border-white";
@@ -22,16 +22,31 @@ export function GetInTouch() {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitSuccessful },
-    reset,
-  } = useForm<GetInTouchValues>({
-    resolver: zodResolver(getInTouchSchema),
+    formState: { errors, isSubmitting },
+    reset
+  } = useForm<ContactSimpleFormValues>({
+    resolver: zodResolver(contactSimpleFormSchema),
+    defaultValues: { ...defaultContactSimpleFormValues }
   });
 
-  const onSubmit = (values: GetInTouchValues) => {
-    console.log("Get in touch (home)", values);
-    reset();
-  };
+  const onSubmit = handleSubmit(async (values) => {
+    try {
+      const payload = buildContactSimplePayload(values);
+      await submitContactSimpleRequest(payload);
+      reset({ ...defaultContactSimpleFormValues });
+      notifySuccess("Thanks — we'll be in touch soon.");
+    } catch (err) {
+      const apiMessage = getAxiosErrorMessage(
+        err,
+        "Unable to send your message right now."
+      );
+      if (apiMessage !== null) {
+        notifyError(apiMessage);
+        return;
+      }
+      notifyError("Network error. Please check your connection and try again.");
+    }
+  });
 
   return (
     <section className="bg-[#ffffff] text-white">
@@ -89,7 +104,9 @@ export function GetInTouch() {
                 </p>
 
                 <form
-                  onSubmit={handleSubmit(onSubmit)}
+                  onSubmit={(event) => {
+                    void onSubmit(event);
+                  }}
                   className="mt-8 flex flex-col gap-6"
                 >
                   <div>
@@ -102,6 +119,7 @@ export function GetInTouch() {
                       placeholder="Full Name"
                       className={inputClass}
                       autoComplete="name"
+                      aria-invalid={Boolean(errors.fullName)}
                     />
                     {errors.fullName ? (
                       <p className="mt-1 text-xs text-red-300">
@@ -120,6 +138,7 @@ export function GetInTouch() {
                       placeholder="Email Address"
                       className={inputClass}
                       autoComplete="email"
+                      aria-invalid={Boolean(errors.email)}
                     />
                     {errors.email ? (
                       <p className="mt-1 text-xs text-red-300">
@@ -137,6 +156,7 @@ export function GetInTouch() {
                       placeholder="Your Message"
                       rows={4}
                       className={`${inputClass} resize-none`}
+                      aria-invalid={Boolean(errors.message)}
                     />
                     {errors.message ? (
                       <p className="mt-1 text-xs text-red-300">
@@ -148,17 +168,12 @@ export function GetInTouch() {
                   <div className="flex justify-end pt-2">
                     <button
                       type="submit"
-                      className="bg-[#1C4863] px-8 py-3 text-sm font-semibold text-white transition hover:bg-[#1C4863]"
+                      disabled={isSubmitting}
+                      className="bg-[#1C4863] px-8 py-3 text-sm font-semibold text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
                     >
-                      Send Message
+                      {isSubmitting ? "Sending…" : "Send Message"}
                     </button>
                   </div>
-
-                  {isSubmitSuccessful ? (
-                    <p className="text-right text-sm text-emerald-400">
-                      Thanks — we&apos;ll be in touch.
-                    </p>
-                  ) : null}
                 </form>
               </div>
             </div>

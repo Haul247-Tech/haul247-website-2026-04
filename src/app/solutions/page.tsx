@@ -1,17 +1,23 @@
+"use client";
+
 import { AboutOperationalPhilosophySection } from "@/components/aboutPageComponent";
 import { AnimateBtn } from "@/components/animate-btn";
 import { ScrollFadeInView } from "@/components/scroll-fade-in-view";
 import { ScrollMouseIcon } from "@/components/scroll-mouse-icon";
 import Image from "next/image";
 import Link from "next/link";
+import { useCallback, useRef } from "react";
 
 type SolutionCard = {
   id: string;
   title: string;
   description: string;
   image: string;
+  video?: string;
+  poster?: string;
   ctaPrimary: string;
   ctaSecondary: string;
+  type: "video" | "image";
 };
 
 const cards: SolutionCard[] = [
@@ -20,18 +26,24 @@ const cards: SolutionCard[] = [
     title: "Haulage Services",
     description:
       "We connect businesses to a structured network of vetted trucks, ensuring reliable capacity when it is needed. Every shipment is supported by real-time tracking for full visibility from dispatch to delivery.",
-    image: "/partners-asset-trucks.png",
+    image: "/images/hu01.jpg",
+    video: "/videos/haulage.mp4",
+    poster: "/images/hu01.jpg",
     ctaPrimary: "Request For Truck Today",
-    ctaSecondary: "Learn more"
+    ctaSecondary: "Learn more",
+    type: "video"
   },
   {
     id: "warehousing",
     title: "Warehouse Services",
     description:
       "We provide warehousing solutions tailored to different cargo requirements, ensuring goods are stored under appropriate operational conditions with structured inventory management and control.",
-    image: "/partners-asset-warehouse.png",
+    image: "/images/wh01.jpg",
+    video: "/videos/warehouse.mp4",
+    poster: "/images/wh01.jpg",
     ctaPrimary: "Request For Warehouse Today",
-    ctaSecondary: "Learn more"
+    ctaSecondary: "Learn more",
+    type: "video"
   },
   {
     id: "dedicated-assets",
@@ -39,8 +51,10 @@ const cards: SolutionCard[] = [
     description:
       "We connect businesses to a structured network of vetted trucks, ensuring reliable capacity when it is needed. Every shipment is supported by real-time tracking for full visibility from dispatch to delivery.",
     image: "/business-caro-2.png",
+    video: "/videos/dedicated.mp4",
     ctaPrimary: "Speak to an Advisor",
-    ctaSecondary: "Learn more"
+    ctaSecondary: "Learn more",
+    type: "video"
   },
   {
     id: "port-operations",
@@ -48,8 +62,10 @@ const cards: SolutionCard[] = [
     description:
       "We connect businesses to a structured network of vetted trucks, ensuring reliable capacity when it is needed. Every shipment is supported by real-time tracking for full visibility from dispatch to delivery.",
     image: "/business-caro-1.png",
+    video: "/videos/port.mp4",
     ctaPrimary: "Speak to an Advisor",
-    ctaSecondary: "Learn more"
+    ctaSecondary: "Learn more",
+    type: "video"
   }
 ];
 
@@ -60,6 +76,56 @@ function PlayIcon() {
         <span className="ml-1 text-3xl">▶</span>
       </span>
     </span>
+  );
+}
+
+function HoverPlayVideo({
+  src,
+  poster,
+  title
+}: {
+  src: string;
+  poster: string;
+  title: string;
+}) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const handlePlay = useCallback(() => {
+    const el = videoRef.current;
+    if (!el) return;
+    void el.play().catch(() => {});
+  }, []);
+
+  const handleStop = useCallback(() => {
+    const el = videoRef.current;
+    if (!el) return;
+    el.pause();
+    el.currentTime = 0;
+  }, []);
+
+  return (
+    <div
+      className="h-full w-full"
+      onMouseEnter={handlePlay}
+      onMouseLeave={handleStop}
+      onFocus={handlePlay}
+      onBlur={handleStop}
+      role="button"
+      tabIndex={0}
+      aria-label={`Preview ${title} video`}
+    >
+      <video
+        ref={videoRef}
+        className="h-full w-full object-cover"
+        muted
+        loop
+        playsInline
+        preload="metadata"
+        poster={poster}
+      >
+        <source src={src} type="video/mp4" />
+      </video>
+    </div>
   );
 }
 
@@ -109,14 +175,24 @@ export default function SolutionsPage() {
               </p>
 
               <div className="relative mt-10 h-[250px] w-full overflow-hidden md:h-[300px]">
-                <Image
-                  src={card.image}
-                  alt={card.title}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                />
-                <PlayIcon />
+                {card.type === "video" ? (
+                  <HoverPlayVideo
+                    src={card.video ?? ""}
+                    poster={card.poster ?? card.image}
+                    title={card.title}
+                  />
+                ) : (
+                  <>
+                    <Image
+                      src={card.image}
+                      alt={card.title}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                    />
+                    <PlayIcon />
+                  </>
+                )}
               </div>
 
               <div className="mt-6 flex flex-wrap gap-3">

@@ -1,32 +1,39 @@
+"use client";
+
 import { AboutOperationalPhilosophySection } from "@/components/aboutPageComponent";
+import { AnimateBtn } from "@/components/animate-btn";
+import { TruckRequestFormModal } from "@/components/request-form/truck-request-form-modal";
 import { ScrollFadeInView } from "@/components/scroll-fade-in-view";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 
 const workCards = [
   {
     title: "Access to Vetted Truck Network",
     body: "We deploy trucks from a network of verified partners, ensuring reliability and suitability for different cargo types.",
-    dark: true
+    dark: true,
   },
   {
     title: "Real-Time Shipment Visibility",
     body: "All movements are supported by real-time tracking, giving clients clear visibility into the location and progress of their consignments.",
-    dark: false
+    dark: false,
   },
   {
     title: "Controlled Dispatch & Monitoring",
     body: "Shipments are coordinated through structured processes with ongoing oversight to maintain efficiency and reduce delays.",
-    dark: false
+    dark: false,
   },
   {
     title: "Secure Handling & Insurance Coverage",
     body: "Goods are handled under defined standards, with insurance coverage in place to protect consignments throughout transit.",
-    dark: true
-  }
+    dark: true,
+  },
 ];
 
 export default function HaulagePage() {
+  const [isTruckRequestOpen, setIsTruckRequestOpen] = useState(false);
+
   return (
     <main className="bg-white text-slate-900">
       <section className="mx-auto w-full max-w-7xl px-6 py-12 md:py-16">
@@ -47,26 +54,33 @@ export default function HaulagePage() {
           provide consistent capacity aligned with business needs.
         </p>
         <div className="mt-8 flex flex-wrap gap-3">
-          <Link
-            href="/contact"
-            className="inline-flex min-h-[48px] min-w-[200px] items-center justify-between border border-haul-navy px-5 text-sm font-medium text-haul-navy transition hover:bg-haul-navy hover:text-white"
+          <AnimateBtn
+            onClick={() => setIsTruckRequestOpen(true)}
+            borderColor="#21445B"
+            color="#21445B"
+            hoverColor="#ffffff"
+            activeColor="#ffffff"
+            hoverBgColor="#21445B"
+            // className="min-w-[240px]"
           >
             Request For Truck Today
-            <span aria-hidden>→</span>
-          </Link>
-          <Link
-            href="/contact"
-            className="inline-flex min-h-[48px] min-w-[170px] items-center justify-between border border-haul-navy px-5 text-sm font-medium text-haul-navy transition hover:bg-haul-navy hover:text-white"
+          </AnimateBtn>
+          <AnimateBtn
+            href={"/contact"}
+            borderColor="#21445B"
+            color="#21445B"
+            hoverColor="#ffffff"
+            activeColor="#ffffff"
+            hoverBgColor="#21445B"
           >
             Speak to an Advisor
-            <span aria-hidden>→</span>
-          </Link>
+          </AnimateBtn>
         </div>
       </section>
 
       <section className="relative h-[190px] w-full overflow-hidden md:h-[240px]">
         <Image
-          src="/haulage-banner.png"
+          src="/images/hu02.jpg"
           alt="Trucks operating on a highway"
           fill
           priority
@@ -96,10 +110,14 @@ export default function HaulagePage() {
               <article
                 key={card.title}
                 className={`p-8 md:p-9 ${
-                  card.dark ? "bg-haul-navy text-white" : "bg-slate-600 text-white"
+                  card.dark
+                    ? "bg-haul-navy text-white"
+                    : "bg-slate-600 text-white"
                 }`}
               >
-                <p className="text-2xl font-medium md:text-[18px]">{card.title}</p>
+                <p className="text-2xl font-medium md:text-[18px]">
+                  {card.title}
+                </p>
                 <p className="mt-4 text-lg leading-relaxed text-slate-100 md:text-[15px] md:leading-[1.4] font-[300]">
                   {card.body}
                 </p>
@@ -110,9 +128,9 @@ export default function HaulagePage() {
       </section>
 
       <section className="bg-white">
-        <div className="mx-auto grid w-full max-w-6xl md:grid-cols-2">
-          <div className="px-6 py-12 md:px-10 md:py-16">
-            <h2 className="text-4xl font-medium text-[#1B3B52] md:text-[45px]">
+        <div className="mx-auto grid w-full md:grid-cols-2">
+          <div className="px-6 py-12 md:px-10 md:py-16 md:pl-[140px]">
+            <h2 className="text-4xl font-medium text-[#1B3B52] md:text-[45px] leading-tight">
               Move Goods with Confidence
             </h2>
             <p className="mt-6 text-xl leading-relaxed text-slate-600 md:text-[15px] md:leading-[1.4] font-[300]">
@@ -121,14 +139,21 @@ export default function HaulagePage() {
               depend on for consistent and efficient delivery.
             </p>
             <div className="mt-8 flex flex-wrap items-center gap-6">
+            <AnimateBtn
+            href={"/contact"}
+            borderColor="#21445B"
+            color="#21445B"
+            hoverColor="#ffffff"
+            activeColor="#ffffff"
+            hoverBgColor="#21445B"
+          >
+            Speak to an Advisor
+          </AnimateBtn>
+              
               <Link
-                href="/contact"
-                className="inline-flex min-h-[48px] min-w-[170px] items-center justify-between border border-haul-navy px-5 text-sm font-medium text-haul-navy transition hover:bg-haul-navy hover:text-white"
+                href="/solutions#warehousing"
+                className="text-xl underline md:text-[15px] font-[300]"
               >
-                Speak to an Advisor
-                <span aria-hidden>→</span>
-              </Link>
-              <Link href="/solutions#warehousing" className="text-xl underline md:text-[15px] font-[300]">
                 Discover about Warehouse
               </Link>
             </div>
@@ -148,6 +173,11 @@ export default function HaulagePage() {
       <ScrollFadeInView delay={0.13}>
         <AboutOperationalPhilosophySection />
       </ScrollFadeInView>
+
+      <TruckRequestFormModal
+        isOpen={isTruckRequestOpen}
+        onClose={() => setIsTruckRequestOpen(false)}
+      />
     </main>
   );
 }
