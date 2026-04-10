@@ -89,7 +89,7 @@ export function SiteFooter() {
                     <ul className="mt-4 space-y-3 text-sm">
                       <li>
                         <Link
-                          href="/solutions#warehousing"
+                          href="/solutions/warehouse"
                           className="text-white transition hover:text-white"
                         >
                           Warehousing
@@ -101,6 +101,22 @@ export function SiteFooter() {
                           className="text-white transition hover:text-white"
                         >
                           Haulage
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          href="/solutions/dedicated"
+                          className="text-white transition hover:text-white"
+                        >
+                          Dedicated Assets
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          href="/solutions/port"
+                          className="text-white transition hover:text-white"
+                        >
+                          Port Operations
                         </Link>
                       </li>
                     </ul>

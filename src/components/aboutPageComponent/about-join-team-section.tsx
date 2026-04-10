@@ -15,13 +15,12 @@ export function AboutJoinTeamSection() {
             embody our company values and vision for transforming Africa.
           </p>
           <AnimateBtn
-            href="/contact"
-            borderColor="#1C4863"
-            color="#1C4863"
-            hoverColor="#1C4863"
-            
-            hoverBgColor="#1C4863"
+            href={"/contact"}
+            borderColor="#21445B"
+            color="#21445B"
+            hoverColor="#ffffff"
             activeColor="#ffffff"
+            hoverBgColor="#21445B"
             className="mt-10 min-h-[44px]lg:min-w-[222px]"
           >
             Speak to an Advisor

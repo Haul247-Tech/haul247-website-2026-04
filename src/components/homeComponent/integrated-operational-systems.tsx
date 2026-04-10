@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 const sharedDescription =
   "Logistics is more than transportation. Every movement affects inventory flow, retail shelves, production timelines, and customer experience. We operate with that full impact in mind — not just the journey, but the outcome.";
@@ -38,17 +41,39 @@ export function IntegratedOperationalSystems() {
           {cards.map((card) => (
             <article
               key={card.title}
-              className="flex min-h-0 flex-col overflow-hidden"
+              className="group relative flex min-h-0 flex-col overflow-visible"
             >
+              <span
+                aria-hidden
+                className="pointer-events-none absolute -left-[4px] -top-[4px] z-20 h-[2px] w-[46%] origin-left scale-x-0 bg-[#1C4863] transition-transform duration-500 ease-out group-hover:scale-x-100"
+              />
+              <span
+                aria-hidden
+                className="pointer-events-none absolute -left-[4px] -top-[4px] z-20 h-[46%] w-[2px] origin-top scale-y-0 bg-[#1C4863] transition-transform duration-500 ease-out group-hover:scale-y-100"
+              />
+              <span
+                aria-hidden
+                className="pointer-events-none absolute -bottom-[4px] -right-[4px] z-20 h-[2px] w-[46%] origin-right scale-x-0 bg-[#1C4863] transition-transform duration-500 ease-out group-hover:scale-x-100"
+              />
+              <span
+                aria-hidden
+                className="pointer-events-none absolute -bottom-[4px] -right-[4px] z-20 h-[46%] w-[2px] origin-bottom scale-y-0 bg-[#1C4863] transition-transform duration-500 ease-out group-hover:scale-y-100"
+              />
               <div className="flex min-h-[290px] flex-1 items-center justify-center bg-[#1C4863] px-2 py-10">
-                <Image
-                  src={card.illustration}
-                  alt={card.illustrationAlt}
-                  width={380}
-                  height={290}
-                  unoptimized
-                  className="h-auto max-h-[290px] w-auto max-w-[85%] object-contain"
-                />
+                <motion.div
+                  animate={{ scale: [1, 1.03, 1] }}
+                  transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
+                  className="flex items-center justify-center"
+                >
+                  <Image
+                    src={card.illustration}
+                    alt={card.illustrationAlt}
+                    width={380}
+                    height={290}
+                    unoptimized
+                    className="h-auto max-h-[290px] w-auto max-w-[85%] object-contain"
+                  />
+                </motion.div>
               </div>
               <div className="flex flex-col bg-[#0C3147] px-6 py-6">
                 <h3 className="text-[15px] font-semibold text-white">{card.title}</h3>

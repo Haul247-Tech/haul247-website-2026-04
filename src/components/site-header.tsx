@@ -8,9 +8,9 @@ import { AnimateBtn } from "./animate-btn";
 
 const solutions = [
   { href: "/solutions/haulage", label: "Haulage" },
-  { href: "/solutions#warehousing", label: "Warehousing" },
-  { href: "/solutions#port-operations", label: "Port Operations" },
-  { href: "/solutions#dedicated-assets", label: "Dedicated Assets" },
+  { href: "/solutions/warehouse", label: "Warehousing" },
+  { href: "/solutions/port", label: "Port Operations" },
+  { href: "/solutions/dedicated", label: "Dedicated Assets" },
 ];
 
 function ChevronDownIcon({ className }: { className?: string }) {
@@ -92,11 +92,12 @@ export function SiteHeader() {
   const navLinkClass = (href: string) => {
     const active = pathname === href;
     return [
-      "text-sm font-medium text-haul-navy transition-colors",
-      "border-b-2 pb-0.5",
+      "relative pb-1 text-sm font-medium text-haul-navy transition-colors",
+      "before:absolute before:bottom-0 before:left-0 before:h-[2px] before:w-1/2 before:bg-haul-navy before:origin-left before:scale-x-0 before:transition-transform before:duration-300 before:ease-out",
+      "after:absolute after:bottom-0 after:right-0 after:h-[2px] after:w-1/2 after:bg-haul-navy after:origin-right after:scale-x-0 after:transition-transform after:duration-300 after:ease-out",
       active
-        ? "border-haul-navy"
-        : "border-transparent hover:border-haul-navy/30",
+        ? "before:scale-x-100 after:scale-x-100"
+        : "hover:before:scale-x-100 hover:after:scale-x-100 focus-visible:before:scale-x-100 focus-visible:after:scale-x-100",
     ].join(" ");
   };
 
@@ -171,13 +172,18 @@ export function SiteHeader() {
           </nav>
 
           <div className="relative z-10 flex shrink-0 items-center gap-3">
-            <Link
-              href="/contact"
-              className="hidden items-center gap-2 rounded-md bg-haul-navy px-4 py-2.5 text-sm font-medium text-white transition hover:bg-haul-navy/90 md:inline-flex"
-            >
-              Get In touch
-              <ArrowRightIcon className="text-white" />
-            </Link>
+          <AnimateBtn
+            href={"/contact"}
+            borderColor="#21445B"
+            color="#FFFFFF"
+            hoverColor="#21445B"
+            activeColor="#21445B"
+            hoverBgColor="#FFFFFF"
+            className="bg-[#21445B]"
+          >
+            Get In touch
+          </AnimateBtn>
+            
 
             <button
               type="button"

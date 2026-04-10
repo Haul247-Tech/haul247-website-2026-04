@@ -9,6 +9,7 @@ import { ScrollMouseIcon } from "../scroll-mouse-icon";
 
 export type HomeHeroSlide = {
   imgLink: string;
+  fullVideoLink: string;
   title: string;
   note: string;
   miniCardTitle: string;
@@ -32,9 +33,11 @@ function HeroMiniLoopVideo({
   title: string;
   allowMotion: boolean;
 }) {
+  const isGifSource = /\.gif(\?.*)?$/i.test(src);
   const ref = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
+    if (isGifSource) return;
     const el = ref.current;
     if (!el) return;
     if (!allowMotion) {
@@ -42,7 +45,18 @@ function HeroMiniLoopVideo({
       return;
     }
     void el.play().catch(() => {});
-  }, [src, allowMotion]);
+  }, [src, allowMotion, isGifSource]);
+
+  if (isGifSource) {
+    return (
+      <img
+        src={src}
+        alt={`${title} background animation`}
+        className="h-full w-full object-cover"
+        loading="eager"
+      />
+    );
+  }
 
   return (
     <video
@@ -80,26 +94,69 @@ export function HomeHeroCarousel({ slides }: HomeHeroCarouselProps) {
         transition: { duration, ease: [0.4, 0, 0.2, 1] as const },
       };
 
+  const staggerContainerVariants = reduceMotion
+    ? undefined
+    : {
+        hidden: {},
+        show: {
+          transition: {
+            staggerChildren: 0.22,
+            delayChildren: 0.08
+          }
+        },
+        exit: {
+          transition: {
+            staggerChildren: 0.14,
+            staggerDirection: -1
+          }
+        }
+      };
+
+  const staggerItemVariants = reduceMotion
+    ? undefined
+    : {
+        hidden: { opacity: 0, y: 22 },
+        show: {
+          opacity: 1,
+          y: 0,
+          transition: { duration: 0.58, ease: [0.4, 0, 0.2, 1] as const }
+        },
+        exit: {
+          opacity: 0,
+          y: -22,
+          transition: { duration: 0.45, ease: [0.4, 0, 1, 1] as const }
+        }
+      };
+
   return (
     <section className="relative min-h-[680px] overflow-hidden text-white lg:min-h-[760px]">
       <div className="absolute inset-0">
         <AnimatePresence initial={false} mode="sync">
           <motion.div
-            key={slide.imgLink + index}
+            key={(slide.miniVideoLink ?? slide.imgLink) + index}
             className="absolute inset-0"
             initial={reduceMotion ? false : { opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={reduceMotion ? undefined : { opacity: 0 }}
             transition={{ duration, ease: "easeInOut" }}
           >
-            <Image
-              src={slide.imgLink}
-              alt=""
-              fill
-              priority={index === 0}
-              className="object-cover"
-              sizes="100vw"
-            />
+            {slide.miniVideoLink ? (
+              <HeroMiniLoopVideo
+                src={slide.fullVideoLink}
+                poster={slide.imgLink}
+                title={slide.title}
+                allowMotion={reduceMotion !== true}
+              />
+            ) : (
+              <Image
+                src={slide.imgLink}
+                alt=""
+                fill
+                priority={index === 0}
+                className="object-cover"
+                sizes="100vw"
+              />
+            )}
           </motion.div>
         </AnimatePresence>
       </div>
@@ -108,14 +165,26 @@ export function HomeHeroCarousel({ slides }: HomeHeroCarouselProps) {
       <div className="relative z-10 mx-auto flex min-h-[680px] w-full max-w-[1280px] flex-col px-6 pb-72 pt-16 lg:min-h-[760px] lg:px-10 lg:pb-28 lg:pt-[178px]">
         <div className="max-w-xl">
           <AnimatePresence mode="wait" initial={false}>
-            <motion.div key={index} {...textMotion}>
-              <h1 className="text-[4xl] font-semibold leading-tight md:text-[46px]">
+            <motion.div
+              key={index}
+              variants={staggerContainerVariants}
+              initial={reduceMotion ? false : "hidden"}
+              animate={reduceMotion ? undefined : "show"}
+              exit={reduceMotion ? undefined : "exit"}
+            >
+              <motion.h1
+                className="text-[4xl] font-semibold leading-tight md:text-[40px]"
+                variants={staggerItemVariants}
+              >
                 {slide.title}
-              </h1>
-              <hr className="my-4" />
-              <p className="mt-8 max-w-lg text-base leading-relaxed text-slate-100/90 md:text-[15px]">
+              </motion.h1>
+              <motion.hr className="my-4" variants={staggerItemVariants} />
+              <motion.p
+                className="mt-8 max-w-lg text-base leading-relaxed text-slate-100/90 md:text-[15px]"
+                variants={staggerItemVariants}
+              >
                 {slide.note}
-              </p>
+              </motion.p>
             </motion.div>
           </AnimatePresence>
           <AnimateBtn

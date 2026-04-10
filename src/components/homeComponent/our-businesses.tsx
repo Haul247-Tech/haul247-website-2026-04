@@ -1,10 +1,10 @@
 import { AnimateBtn } from "@/components/animate-btn";
 
 const businessActions = [
-  { href: "/#haulage", label: "Explore Haulage Services" },
-  { href: "/#warehousing", label: "Explore Warehousing Services" },
-  { href: "/#port-operations", label: "Explore Port Operations" },
-  { href: "/#dedicated-assets", label: "Explore Dedicated Assets" }
+  { href: "/solutions/haulage", label: "Explore Haulage Services" },
+  { href: "/solutions/warehouse", label: "Explore Warehousing Services" },
+  { href: "/solutions/port", label: "Explore Port Operations" },
+  { href: "/solutions/dedicated", label: "Explore Dedicated Assets" }
 ];
 
 export function OurBusinesses() {
