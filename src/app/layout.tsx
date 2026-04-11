@@ -4,6 +4,7 @@ import "./globals.css";
 import { AppToaster } from "@/components/app-toaster";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { WhatsAppFab } from "@/components/whatsapp-fab";
 
 const ibmPlexSans = IBM_Plex_Sans({
   subsets: ["latin"],
@@ -125,6 +126,7 @@ export default function RootLayout({
         <SiteHeader />
         {children}
         <SiteFooter />
+        <WhatsAppFab />
       </body>
     </html>
   );

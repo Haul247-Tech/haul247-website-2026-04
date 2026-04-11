@@ -27,7 +27,7 @@ const slides: Slide[] = [
     description:
       "Logistics is more than transportation. Every movement affects inventory flow, retail shelves, production timelines, and customer experience. We operate with that full impact in mind - not just the journey, but the outcome.",
     cta: "Need a truck or warehouse?",
-    ctaHref: "/contact",
+    ctaHref: "/solutions/haulage",
     imageSrc: "/business-caro-1.png",
     imageAlt: "Loaded truck on a city road",
     flip: true,
@@ -41,7 +41,7 @@ const slides: Slide[] = [
     description:
       "Our logistics operations are guided by clear processes, monitored execution, and defined service standards. This ensures goods move securely, timelines are maintained, and clients remain confident in every delivery.",
     cta: "Need Port Operation Services?",
-    ctaHref: "/contact",
+    ctaHref: "/solutions/port",
     imageSrc: "/business-caro-2.png",
     imageAlt: "Operations staff directing a truck",
     flip: false,
@@ -55,7 +55,7 @@ const slides: Slide[] = [
     description:
       "Our logistics operations are guided by clear processes, monitored execution, and defined service standards. This ensures goods move securely, timelines are maintained, and clients remain confident in every delivery.",
     cta: "Need a Dedicated Asset?",
-    ctaHref: "/contact",
+    ctaHref: "/solutions/dedicated",
     imageSrc: "/business-caro-3.png",
     imageAlt: "Trackers dashboard and route map",
     flip: false,

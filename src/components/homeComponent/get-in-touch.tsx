@@ -10,10 +10,13 @@ import {
   type ContactSimpleFormValues
 } from "@/lib/forms/contact-simple";
 import { notifyError, notifySuccess } from "@/lib/notify";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { AnimateBtn } from "../animate-btn";
+
+const EASE = [0.16, 1, 0.3, 1] as const;
 
 const inputClass =
   "w-full border-0 border-b border-white/60 bg-transparent py-2.5 text-sm text-white placeholder:text-white/55 outline-none transition focus:border-white";
@@ -52,7 +55,13 @@ export function GetInTouch() {
     <section className="bg-[#ffffff] text-white">
       <div className="mx-auto w-full max-w-[1280px] px-6 py-14 md:py-16  !pt-1">
         <div className="mx-auto grid md:grid-cols-[0.6fr_1.1fr]">
-          <div className="relative min-h-[300px] md:min-h-[620px]">
+          <motion.div
+            initial={{ opacity: 0, x: -24 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.15 }}
+            transition={{ duration: 0.72, ease: EASE }}
+            className="relative min-h-[300px] md:min-h-[620px]"
+          >
             <Image
               src="/get-in-touch-support.png"
               alt="Customer support specialist with headset at workstation"
@@ -62,9 +71,15 @@ export function GetInTouch() {
               sizes="(max-width: 768px) 100vw, 50vw"
               priority
             />
-          </div>
+          </motion.div>
 
-          <div className="flex flex-col border-t bg-[#070d18] border-white/15 px-6 py-12 md:border-l md:border-t-0 md:px-10 md:py-14 lg:px-14 lg:py-16">
+          <motion.div
+            initial={{ opacity: 0, x: 24 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.15 }}
+            transition={{ duration: 0.72, delay: 0.1, ease: EASE }}
+            className="flex flex-col border-t bg-[#070d18] border-white/15 px-6 py-12 md:border-l md:border-t-0 md:px-10 md:py-14 lg:px-14 lg:py-16"
+          >
             <h2 className="text-2xl font-medium leading-tight md:text-3xl lg:text-[26px]">
               Get in touch with us for more information.
             </h2>
@@ -83,7 +98,7 @@ export function GetInTouch() {
                     </p>
                   </div>
                   <AnimateBtn
-                    href="#solutions"
+                    href="tel:09010003247"
                     borderColor="#ffffff"
                     color="#ffffff"
                     hoverColor="#1C4863"
@@ -166,7 +181,8 @@ export function GetInTouch() {
                     ) : null}
                   </div>
 
-                  <div className="flex justify-end pt-2">
+                  <div className="flex items-center justify-between pt-2">
+                    <p className="text-xs text-white/40">We respond to all enquiries within 1 business day.</p>
                     <button
                       type="submit"
                       disabled={isSubmitting}
@@ -178,7 +194,7 @@ export function GetInTouch() {
                 </form>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

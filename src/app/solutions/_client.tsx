@@ -22,6 +22,13 @@ type SolutionCard = {
   type: "video" | "image";
 };
 
+const solutionHref: Record<string, string> = {
+  haulage: "/solutions/haulage",
+  warehousing: "/solutions/warehouse",
+  "dedicated-assets": "/solutions/dedicated",
+  "port-operations": "/solutions/port",
+};
+
 const cards: SolutionCard[] = [
   {
     id: "haulage",
@@ -217,7 +224,7 @@ export default function SolutionsClient() {
 
               <div className="mt-6 flex flex-wrap gap-3">
                 <AnimateBtn
-                  href="#solutions"
+                  href={solutionHref[card.id] ?? "/solutions"}
                   borderColor="#ffffff"
                   color="#ffffff"
                   hoverColor="#1C4863"
@@ -227,11 +234,7 @@ export default function SolutionsClient() {
                   {card.ctaPrimary}
                 </AnimateBtn>
                 <AnimateBtn
-                  href={
-                    card.id === "haulage"
-                      ? "/solutions/haulage"
-                      : `/solutions#${card.id}`
-                  }
+                  href={solutionHref[card.id] ?? "/solutions"}
                   borderColor="#ffffff"
                   color="#ffffff"
                   hoverColor="#1C4863"

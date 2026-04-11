@@ -3,25 +3,30 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 
-const sharedDescription =
-  "Logistics is more than transportation. Every movement affects inventory flow, retail shelves, production timelines, and customer experience. We operate with that full impact in mind — not just the journey, but the outcome.";
+const EASE = [0.16, 1, 0.3, 1] as const;
 
 const cards = [
   {
-    title: "Real- Time Tracking",
+    title: "Real-Time Tracking",
     illustration: "/images/real-time-tracking.png",
-    illustrationAlt: "Real-time tracking illustration"
+    illustrationAlt: "Real-time tracking illustration",
+    description:
+      "Every truck and consignment is tracked live. Location data, status updates, and route progress give your team complete visibility from dispatch through final delivery.",
   },
   {
     title: "Insurance Coverage",
     illustration: "/images/insurance-coverage.png",
-    illustrationAlt: "Insurance coverage illustration"
+    illustrationAlt: "Insurance coverage illustration",
+    description:
+      "All goods in transit and in storage are covered under comprehensive cargo insurance, protecting consignments against loss, damage, and unforeseen incidents throughout the supply chain.",
   },
   {
     title: "End to End Dashboard",
     illustration: "/images/end-to-end-dashboard.png",
-    illustrationAlt: "End to end dashboard illustration"
-  }
+    illustrationAlt: "End to end dashboard illustration",
+    description:
+      "Monitor your entire operation from a single interface. Track active shipments, review delivery history, manage inventory, and access performance reports — all in one place.",
+  },
 ];
 
 export function IntegratedOperationalSystems() {
@@ -38,9 +43,13 @@ export function IntegratedOperationalSystems() {
         </p>
 
         <div className="mt-10 grid gap-6 md:grid-cols-3">
-          {cards.map((card) => (
-            <article
+          {cards.map((card, index) => (
+            <motion.article
               key={card.title}
+              initial={{ opacity: 0, y: 28 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.1 }}
+              transition={{ duration: 0.65, ease: EASE, delay: index * 0.1 }}
               className="group relative flex min-h-0 flex-col overflow-visible"
             >
               <span
@@ -78,10 +87,10 @@ export function IntegratedOperationalSystems() {
               <div className="flex flex-col bg-[#0C3147] px-6 py-6">
                 <h3 className="text-[15px] font-semibold text-white">{card.title}</h3>
                 <p className="mt-3 text-[12px] font-light leading-relaxed text-slate-300">
-                  {sharedDescription}
+                  {card.description}
                 </p>
               </div>
-            </article>
+            </motion.article>
           ))}
         </div>
         <div className="h-[42px] w-full flex items-start justify-end">

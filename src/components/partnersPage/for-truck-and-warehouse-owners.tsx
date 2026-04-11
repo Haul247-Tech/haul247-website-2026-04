@@ -1,7 +1,10 @@
 "use client";
 
+import { motion } from "framer-motion";
 import Image from "next/image";
 import { useState } from "react";
+
+const EASE = [0.16, 1, 0.3, 1] as const;
 import { AnimateBtn } from "../animate-btn";
 import { PartnerTruckAssetsFormModal } from "@/components/request-form/partner-truck-assets-form-modal";
 import { PartnerWarehouseAssetsFormModal } from "@/components/request-form/partner-warehouse-assets-form-modal";
@@ -60,8 +63,14 @@ export function ForTruckAndWarehouseOwners() {
       <section className="bg-white py-14 md:py-16">
         <div className="mx-auto w-full max-w-7xl px-6">
           <div className="grid gap-10 md:grid-cols-2 md:gap-8">
-            {ownerCards.map((card) => (
-              <article key={card.title}>
+            {ownerCards.map((card, index) => (
+              <motion.article
+                key={card.title}
+                initial={{ opacity: 0, y: 28 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.1 }}
+                transition={{ duration: 0.65, ease: EASE, delay: index * 0.12 }}
+              >
                 <h2 className="text-4xl font-medium text-[#1B3B52] md:text-[45px]">
                   {card.title}
                 </h2>
@@ -120,7 +129,7 @@ export function ForTruckAndWarehouseOwners() {
                     {card.cta}
                   </AnimateBtn>
                 )}
-              </article>
+              </motion.article>
             ))}
           </div>
         </div>

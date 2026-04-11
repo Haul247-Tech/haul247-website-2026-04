@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -39,9 +40,15 @@ export function PartnerAssets() {
             />
           </div>
 
-          <div className="flex flex-1 h-full flex-col justify-between pt-0 md:pt-2">
+          <motion.div
+            initial={{ opacity: 0, x: 24 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.15 }}
+            transition={{ duration: 0.72, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            className="flex flex-1 h-full flex-col justify-between pt-0 md:pt-2"
+          >
             <div>
-              <h3 className="text-2xl font-medium leading-snug md:text-[45]">
+              <h3 className="text-2xl font-medium leading-snug md:text-[45px]">
                 Simple onboarding. Structured utilization.
               </h3>
               <p className="mt-3 text-base font-light leading-relaxed text-white/85 md:text-[15px]">
@@ -87,7 +94,7 @@ export function PartnerAssets() {
                 </Link>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
