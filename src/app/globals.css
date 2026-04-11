@@ -9,3 +9,88 @@
 body {
   @apply bg-slate-950 font-sans text-slate-100 antialiased;
 }
+
+/* ─── Sharpness & rendering quality ─────────────────────── */
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4 {
+  font-kerning: normal;
+  text-rendering: optimizeLegibility;
+}
+
+/* Prevent subpixel blur during GPU-composited transforms */
+img {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* ─── Page-load entrance ─────────────────────────────── */
+@keyframes haul-page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+main {
+  animation: haul-page-enter 0.65s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ─── Hero Ken Burns ─────────────────────────────────── */
+@keyframes haul-ken-burns {
+  from { transform: scale(1); }
+  to   { transform: scale(1.08); }
+}
+.haul-ken-burns {
+  animation: haul-ken-burns 12s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+/* ─── Marquee edge-fade mask ─────────────────────────── */
+.haul-marquee-fade {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 7%,
+    black 93%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 7%,
+    black 93%,
+    transparent 100%
+  );
+}
+
+/* ─── Scroll mouse icon animation ───────────────────── */
+@keyframes haul-scroll-wheel {
+  0%, 100% { transform: translateY(0);   opacity: 1;   }
+  50%       { transform: translateY(5px); opacity: 0.4; }
+}
+.haul-scroll-wheel {
+  animation: haul-scroll-wheel 1.6s ease-in-out infinite;
+  transform-origin: center;
+}
+@media (prefers-reduced-motion: reduce) {
+  .haul-scroll-wheel { animation: none; }
+}
+
+/* ─── Image hover-zoom utility ───────────────────────── */
+.haul-img-zoom img,
+.haul-img-zoom video {
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+.haul-img-zoom:hover img,
+.haul-img-zoom:hover video {
+  transform: scale(1.05);
+}

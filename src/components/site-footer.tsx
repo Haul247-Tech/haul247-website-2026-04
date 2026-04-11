@@ -21,6 +21,8 @@ export function SiteFooter() {
               alt="Haul247"
               width={284}
               height={174}
+              quality={90}
+              sizes="(max-width: 768px) 200px, 284px"
               className="h-12 w-auto object-contain object-left md:h-14"
             />
             <p className="mt-6 text-xl font-semibold leading-snug md:text-[28px]">

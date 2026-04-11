@@ -1,10 +1,19 @@
 "use client";
 
+import { motion } from "framer-motion";
+
+const EASE = [0.16, 1, 0.3, 1] as const;
+
 export function AboutOurStorySection() {
   return (
     <section className="bg-white py-14 text-slate-900 md:py-20">
       <div className="mx-auto grid max-w-7xl gap-10 px-6 lg:grid-cols-2 lg:items-start lg:gap-14">
-        <div>
+        <motion.div
+          initial={{ opacity: 0, x: -24 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, amount: 0.15 }}
+          transition={{ duration: 0.72, ease: EASE }}
+        >
           <h2 className="text-3xl font-medium text-haul-navy md:text-[45px]">
             Our Story.
           </h2>
@@ -26,9 +35,15 @@ export function AboutOurStorySection() {
               foundations businesses depend on every day.
             </p>
           </div>
-        </div>
+        </motion.div>
 
-        <div className="relative aspect-video w-full overflow-hidden bg-slate-900">
+        <motion.div
+          initial={{ opacity: 0, x: 24 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, amount: 0.15 }}
+          transition={{ duration: 0.72, delay: 0.12, ease: EASE }}
+          className="relative aspect-video w-full overflow-hidden bg-slate-900"
+        >
           <iframe
             className="h-full w-full"
             src="https://www.youtube-nocookie.com/embed/H9d0rqYzAIw?rel=0&modestbranding=1"
@@ -38,7 +53,7 @@ export function AboutOurStorySection() {
             referrerPolicy="strict-origin-when-cross-origin"
             allowFullScreen
           />
-        </div>
+        </motion.div>
       </div>
     </section>
   );

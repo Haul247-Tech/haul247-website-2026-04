@@ -70,7 +70,7 @@ export function IntegratedOperationalSystems() {
                     alt={card.illustrationAlt}
                     width={380}
                     height={290}
-                    unoptimized
+                    quality={90}
                     className="h-auto max-h-[290px] w-auto max-w-[85%] object-contain"
                   />
                 </motion.div>

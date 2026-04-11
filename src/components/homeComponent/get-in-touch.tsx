@@ -57,7 +57,8 @@ export function GetInTouch() {
               src="/get-in-touch-support.png"
               alt="Customer support specialist with headset at workstation"
               fill
-              className="object-cover grayscale"
+              quality={90}
+              className="object-cover"
               sizes="(max-width: 768px) 100vw, 50vw"
               priority
             />

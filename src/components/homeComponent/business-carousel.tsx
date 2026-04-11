@@ -149,7 +149,9 @@ export function BusinessCarousel() {
             alt={activeSlide.imageAlt}
             fill
             priority
+            quality={92}
             className="object-cover"
+            sizes="(max-width: 768px) 100vw, 50vw"
           />
         </motion.div>
       </AnimatePresence>

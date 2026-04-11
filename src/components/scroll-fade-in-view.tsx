@@ -23,10 +23,10 @@ export function ScrollFadeInView({
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y: 22 }}
+      initial={{ opacity: 0, y: 28 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: false, amount: 0.2 }}
-      transition={{ duration: 0.45, ease: "easeOut", delay }}
+      viewport={{ once: true, amount: 0.12 }}
+      transition={{ duration: 0.72, ease: [0.16, 1, 0.3, 1], delay }}
     >
       {children}
     </motion.div>

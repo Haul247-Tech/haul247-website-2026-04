@@ -45,7 +45,7 @@ export function TrustedClient() {
         ))}
       </div>
 
-      <div className="relative w-full overflow-hidden motion-reduce:hidden">
+      <div className="relative w-full overflow-hidden motion-reduce:hidden haul-marquee-fade">
         <div
           className="flex w-max gap-12 md:gap-20 animate-trusted-marquee"
           aria-hidden

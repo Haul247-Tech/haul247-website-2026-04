@@ -1,6 +1,10 @@
+"use client";
+
+import { motion } from "framer-motion";
 import Image from "next/image";
-import Link from "next/link";
 import { AnimateBtn } from "../animate-btn";
+
+const EASE = [0.16, 1, 0.3, 1] as const;
 
 const pillars = [
   {
@@ -43,23 +47,36 @@ export function AboutOperationalPhilosophySection() {
       <div className="mx-auto w-full max-w-7xl px-6">
         <div className="grid grid-cols-1 md:grid-cols-3">
           {pillars.map((item, index) => (
-            <article key={item.title} className={columnClass(index)}>
-              <div className="relative mb-8 h-16 w-16 shrink-0 md:h-[142px] md:w-[142px] flex items-center justify-center mx-auto">
+            <motion.article
+              key={item.title}
+              initial={{ opacity: 0, y: 28 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.1 }}
+              transition={{ duration: 0.65, ease: EASE, delay: index * 0.12 }}
+              className={columnClass(index)}
+            >
+              <motion.div
+                initial={{ opacity: 0, scale: 0.85 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, ease: EASE, delay: index * 0.12 + 0.1 }}
+                className="relative mb-8 flex h-16 w-16 shrink-0 items-center justify-center md:h-[142px] md:w-[142px] mx-auto"
+              >
                 <Image
                   src={item.icon}
                   alt=""
                   fill
                   unoptimized
-                  className="object-contain object-center mx-auto"
+                  className="object-contain object-center"
                 />
-              </div>
+              </motion.div>
               <h3 className="text-lg font-medium leading-snug text-white md:text-[25px]">
                 {item.title}
               </h3>
               <p className="mt-4 text-sm leading-relaxed text-slate-300 md:text-[15px] font-light">
                 {item.body}
               </p>
-            </article>
+            </motion.article>
           ))}
         </div>
 

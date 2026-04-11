@@ -85,6 +85,13 @@ export function HomeHeroCarousel({ slides }: HomeHeroCarouselProps) {
     setIndex((i) => (i + 1) % slides.length);
   }, [slides.length]);
 
+  // Auto-advance every 7 seconds
+  useEffect(() => {
+    if (reduceMotion) return;
+    const timer = window.setTimeout(goNext, 7000);
+    return () => window.clearTimeout(timer);
+  }, [index, goNext, reduceMotion]);
+
   const textMotion = reduceMotion
     ? {}
     : {
@@ -115,15 +122,15 @@ export function HomeHeroCarousel({ slides }: HomeHeroCarouselProps) {
   const staggerItemVariants = reduceMotion
     ? undefined
     : {
-        hidden: { opacity: 0, y: 22 },
+        hidden: { opacity: 0, y: 30 },
         show: {
           opacity: 1,
           y: 0,
-          transition: { duration: 0.58, ease: [0.4, 0, 0.2, 1] as const }
+          transition: { duration: 0.72, ease: [0.16, 1, 0.3, 1] as const }
         },
         exit: {
           opacity: 0,
-          y: -22,
+          y: -24,
           transition: { duration: 0.45, ease: [0.4, 0, 1, 1] as const }
         }
       };
@@ -140,27 +147,30 @@ export function HomeHeroCarousel({ slides }: HomeHeroCarouselProps) {
             exit={reduceMotion ? undefined : { opacity: 0 }}
             transition={{ duration, ease: "easeInOut" }}
           >
-            {slide.miniVideoLink ? (
-              <HeroMiniLoopVideo
-                src={slide.fullVideoLink}
-                poster={slide.imgLink}
-                title={slide.title}
-                allowMotion={reduceMotion !== true}
-              />
-            ) : (
-              <Image
-                src={slide.imgLink}
-                alt=""
-                fill
-                priority={index === 0}
-                className="object-cover"
-                sizes="100vw"
-              />
-            )}
+            <div className={`absolute inset-0${reduceMotion ? "" : " haul-ken-burns"}`}>
+              {slide.miniVideoLink ? (
+                <HeroMiniLoopVideo
+                  src={slide.fullVideoLink}
+                  poster={slide.imgLink}
+                  title={slide.title}
+                  allowMotion={reduceMotion !== true}
+                />
+              ) : (
+                <Image
+                  src={slide.imgLink}
+                  alt=""
+                  fill
+                  priority={index === 0}
+                  quality={92}
+                  className="object-cover"
+                  sizes="100vw"
+                />
+              )}
+            </div>
           </motion.div>
         </AnimatePresence>
       </div>
-      <div className="absolute inset-0 bg-slate-950/45" />
+      <div className="absolute inset-0 bg-gradient-to-r from-slate-950/80 via-slate-950/45 to-slate-950/10" />
 
       <div className="relative z-10 mx-auto flex min-h-[680px] w-full max-w-[1280px] flex-col px-6 pb-72 pt-16 lg:min-h-[760px] lg:px-10 lg:pb-28 lg:pt-[178px]">
         <div className="max-w-xl">
@@ -173,7 +183,7 @@ export function HomeHeroCarousel({ slides }: HomeHeroCarouselProps) {
               exit={reduceMotion ? undefined : "exit"}
             >
               <motion.h1
-                className="text-[4xl] font-semibold leading-tight md:text-[40px]"
+                className="text-[clamp(2rem,5vw,2.5rem)] font-semibold leading-tight"
                 variants={staggerItemVariants}
               >
                 {slide.title}
@@ -198,6 +208,20 @@ export function HomeHeroCarousel({ slides }: HomeHeroCarouselProps) {
                 Explore our Solutions
               </AnimateBtn>
 
+          {/* Slide progress indicators */}
+          <div className="mt-6 flex items-center gap-2" aria-label="Slide indicators">
+            {slides.map((_, i) => (
+              <button
+                key={i}
+                type="button"
+                onClick={() => setIndex(i)}
+                className={`h-[2px] rounded-full transition-all duration-500 ${
+                  i === index ? "w-8 bg-white" : "w-2.5 bg-white/35 hover:bg-white/60"
+                }`}
+                aria-label={`Go to slide ${i + 1}`}
+              />
+            ))}
+          </div>
         </div>
 
         <div className="mt-auto hidden text-white/80 md:block">

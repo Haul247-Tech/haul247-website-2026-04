@@ -96,6 +96,7 @@ export function PartnersPageHero() {
             alt="Container ship at sea"
             fill
             priority
+            quality={92}
             className="object-cover will-change-transform"
             sizes="100vw"
           />

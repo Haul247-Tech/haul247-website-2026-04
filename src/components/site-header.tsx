@@ -112,6 +112,8 @@ export function SiteHeader() {
               width={181}
               height={120}
               priority
+              quality={90}
+              sizes="181px"
               className="h-10 w-auto object-contain object-left md:h-11"
             />
           </Link>

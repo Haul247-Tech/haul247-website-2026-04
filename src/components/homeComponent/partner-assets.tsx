@@ -32,6 +32,7 @@ export function PartnerAssets() {
               src="/partner-assets.png"
               alt="Aerial view of intermodal logistics terminal with containers and crane"
               fill
+              quality={92}
               className="object-cover"
               sizes="(max-width: 768px) 100vw, 50vw"
               priority

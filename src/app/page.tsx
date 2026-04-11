@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import {
   BusinessCarousel,
   GetInTouch,
@@ -8,6 +9,19 @@ import {
   TrustedClient
 } from "@/components/homeComponent";
 import { ScrollFadeInView } from "@/components/scroll-fade-in-view";
+
+export const metadata: Metadata = {
+  title: "Africa's Leading Logistics & Haulage Platform",
+  description:
+    "Haul247 delivers structured haulage, warehouse management, and port logistics across Africa. 550+ trucks, 70+ warehouses, 97.99% on-time delivery. Get started today.",
+  alternates: { canonical: "/" },
+  openGraph: {
+    title: "Haul247 — Africa's Leading Logistics & Haulage Platform",
+    description:
+      "Haul247 delivers structured haulage, warehouse management, and port logistics across Africa. 550+ trucks, 70+ warehouses, 97.99% on-time delivery.",
+    url: "/",
+  },
+};
 
 export default function Home() {
   return (

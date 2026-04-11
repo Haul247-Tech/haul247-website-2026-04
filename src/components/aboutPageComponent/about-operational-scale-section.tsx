@@ -1,3 +1,9 @@
+"use client";
+
+import { motion } from "framer-motion";
+
+const EASE = [0.16, 1, 0.3, 1] as const;
+
 const metrics = [
   {
     value: "150,000,000 KM+",
@@ -46,14 +52,21 @@ export function AboutOperationalScaleSection() {
       <div className="mx-auto w-full max-w-7xl px-6 bg-[#091822]">
         <div className="grid grid-cols-1 md:grid-cols-3">
           {metrics.map((item, index) => (
-            <article key={item.value} className={cellClasses(index)}>
+            <motion.article
+              key={item.value}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.1 }}
+              transition={{ duration: 0.65, ease: EASE, delay: index * 0.08 }}
+              className={cellClasses(index)}
+            >
               <p className="text-2xl font-semibold leading-tight md:text-[30px]">
                 {item.value}
               </p>
               <p className="mt-3 text-sm leading-relaxed text-white/80 md:text-[12px] font-light">
                 {item.label}
               </p>
-            </article>
+            </motion.article>
           ))}
         </div>
       </div>
