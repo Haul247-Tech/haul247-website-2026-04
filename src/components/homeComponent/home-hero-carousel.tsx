@@ -189,24 +189,55 @@ export function HomeHeroCarousel({ slides }: HomeHeroCarouselProps) {
                 {slide.title}
               </motion.h1>
               <motion.hr className="my-4" variants={staggerItemVariants} />
+              <motion.div
+                variants={staggerItemVariants}
+                className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] font-normal text-white/65"
+              >
+                <span className="flex items-center gap-1.5">
+                  <span className="h-1.5 w-1.5 rounded-full bg-green-400" aria-hidden />
+                  97.99% On-Time Delivery
+                </span>
+                <span aria-hidden className="text-white/30">·</span>
+                <span>550+ Trucks</span>
+                <span aria-hidden className="text-white/30">·</span>
+                <span>25,000+ Trips Completed</span>
+              </motion.div>
               <motion.p
-                className="mt-8 max-w-lg text-base leading-relaxed text-slate-100/90 md:text-[15px]"
+                className="mt-4 max-w-lg text-base leading-relaxed text-slate-100/90 md:text-[15px]"
                 variants={staggerItemVariants}
               >
                 {slide.note}
               </motion.p>
             </motion.div>
           </AnimatePresence>
-          <AnimateBtn
-                href="#solutions"
-                borderColor="#ffffff"
-                color="#ffffff"
-                hoverColor="#1C4863"
-                hoverBgColor="#ffffff"
-                className="mt-10 min-h-[44px]  lg:min-w-[222px]"
-              >
-                Explore our Solutions
-              </AnimateBtn>
+          <div className="mt-10 flex flex-wrap gap-3">
+            <AnimateBtn
+              href="/solutions/haulage"
+              borderColor="#ffffff"
+              color="#ffffff"
+              hoverColor="#1C4863"
+              hoverBgColor="#ffffff"
+              className="min-h-[44px] lg:min-w-[200px]"
+            >
+              Book a Truck
+            </AnimateBtn>
+            <AnimateBtn
+              href="#solutions"
+              borderColor="rgba(255,255,255,0.45)"
+              color="rgba(255,255,255,0.7)"
+              hoverColor="#1C4863"
+              hoverBgColor="#ffffff"
+              className="min-h-[44px] lg:min-w-[200px]"
+            >
+              Explore Solutions
+            </AnimateBtn>
+          </div>
+          <p className="mt-4 text-[11px] font-normal text-white/45">
+            Own a truck or warehouse?{" "}
+            <a href="/partners" className="text-white/65 underline hover:text-white transition-colors">
+              Partner your assets →
+            </a>
+          </p>
 
           {/* Slide progress indicators */}
           <div className="mt-6 flex items-center gap-2" aria-label="Slide indicators">
@@ -246,7 +277,7 @@ export function HomeHeroCarousel({ slides }: HomeHeroCarouselProps) {
             <button
               type="button"
               onClick={goNext}
-              className="mt-[13px] inline-flex items-center gap-2 text-left text-sm md:text-[12px] font-regular text-white/95 transition hover:text-white underline"
+              className="mt-[13px] inline-flex items-center gap-2 text-left text-sm md:text-[12px] font-normal text-white/95 transition hover:text-white underline"
               aria-label={`Next vertical: ${slides[(index + 1) % slides.length]?.miniCardTitle ?? "slide"}`}
             >
               Next Verticals{" "}

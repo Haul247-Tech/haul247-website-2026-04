@@ -59,7 +59,7 @@ export function PartnerAssets() {
               <div className="max-w-[194px]">
                 <div className="mt-8 border-b border-white/25" />
 
-                <p className="mt-2 text-xl font-regular md:text-[15px]">
+                <p className="mt-2 text-xl font-normal md:text-[15px]">
                   Want to partner your assets?
                 </p>
               </div>

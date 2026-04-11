@@ -69,6 +69,7 @@ export function AnimateBtn(props: AnimateBtnProps) {
     "group relative",
     layoutClasses,
     "text-[var(--ab-text)] hover:text-[var(--ab-hover-text)] active:text-[var(--ab-active-text)]",
+    "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--ab-fill)]",
     className
   ]
     .filter(Boolean)

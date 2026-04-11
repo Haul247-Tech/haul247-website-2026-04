@@ -6,7 +6,7 @@ import { ScrollFadeInView } from "@/components/scroll-fade-in-view";
 import { ScrollMouseIcon } from "@/components/scroll-mouse-icon";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { useCallback, useRef } from "react";
+import { useCallback, useRef, useState } from "react";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -98,11 +98,13 @@ function HoverPlayVideo({
   title: string;
 }) {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   const handlePlay = useCallback(() => {
     const el = videoRef.current;
     if (!el) return;
     void el.play().catch(() => {});
+    setIsPlaying(true);
   }, []);
 
   const handleStop = useCallback(() => {
@@ -110,18 +112,17 @@ function HoverPlayVideo({
     if (!el) return;
     el.pause();
     el.currentTime = 0;
+    setIsPlaying(false);
   }, []);
 
   return (
-    <div
-      className="h-full w-full"
+    <button
+      type="button"
+      className="h-full w-full cursor-default focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
       onMouseEnter={handlePlay}
       onMouseLeave={handleStop}
-      onFocus={handlePlay}
-      onBlur={handleStop}
-      role="button"
-      tabIndex={0}
-      aria-label={`Preview ${title} video`}
+      onClick={() => (isPlaying ? handleStop() : handlePlay())}
+      aria-label={`${isPlaying ? "Pause" : "Play"} ${title} preview`}
     >
       <video
         ref={videoRef}
@@ -134,7 +135,7 @@ function HoverPlayVideo({
       >
         <source src={src} type="video/mp4" />
       </video>
-    </div>
+    </button>
   );
 }
 

@@ -1,4 +1,5 @@
 export { BusinessCarousel } from "./business-carousel";
+export { ClientTestimonials } from "./client-testimonials";
 export { GetInTouch } from "./get-in-touch";
 export { HomeHero } from "./home-hero";
 export { IntegratedOperationalSystems } from "./integrated-operational-systems";

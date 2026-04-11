@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import {
   BusinessCarousel,
+  ClientTestimonials,
   GetInTouch,
   HomeHero,
   IntegratedOperationalSystems,
@@ -26,27 +27,30 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <main>
+      {/* Hero: uses animate-on-mount internally, ScrollFadeInView provides page-enter lift */}
       <ScrollFadeInView>
         <HomeHero />
       </ScrollFadeInView>
+
+      {/* Sections with own internal whileInView — no outer wrapper to avoid double-fade */}
+      <OurBusinesses />
+
+      {/* BusinessCarousel uses AnimatePresence (state-driven), not scroll — wrap is safe */}
       <ScrollFadeInView delay={0.03}>
-        <OurBusinesses />
-      </ScrollFadeInView>
-      <ScrollFadeInView delay={0.05}>
         <BusinessCarousel />
       </ScrollFadeInView>
-      <ScrollFadeInView delay={0.07}>
-        <IntegratedOperationalSystems />
-      </ScrollFadeInView>
-      <ScrollFadeInView delay={0.09}>
-        <PartnerAssets />
-      </ScrollFadeInView>
-      <ScrollFadeInView delay={0.11}>
+
+      <IntegratedOperationalSystems />
+      <PartnerAssets />
+
+      {/* TrustedClient has no internal whileInView — wrap provides entrance */}
+      <ScrollFadeInView delay={0.05}>
         <TrustedClient />
       </ScrollFadeInView>
-      <ScrollFadeInView delay={0.13}>
-        <GetInTouch />
-      </ScrollFadeInView>
+
+      <ClientTestimonials />
+
+      <GetInTouch />
     </main>
   );
 }

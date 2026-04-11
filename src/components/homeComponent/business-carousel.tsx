@@ -120,7 +120,7 @@ export function BusinessCarousel() {
               </p>
               <Link
                 href={activeSlide.ctaHref}
-                className="mt-6 inline-block w-fit border-b border-white/40 pb-1 text-sm font-regular text-white/95"
+                className="mt-6 inline-block w-fit border-b border-white/40 pb-1 text-sm font-normal text-white/95"
               >
                 {activeSlide.cta}
               </Link>

@@ -182,7 +182,7 @@ export function GetInTouch() {
                   </div>
 
                   <div className="flex items-center justify-between pt-2">
-                    <p className="text-xs text-white/40">We respond to all enquiries within 1 business day.</p>
+                    <p className="text-xs text-white/60">We respond to all enquiries within 1 business day.</p>
                     <button
                       type="submit"
                       disabled={isSubmitting}
